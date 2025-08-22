@@ -1,4 +1,5 @@
-"use client";
+"use client"
+import React from 'react'
 import ButtonLoading from "@/app/compo/ButtonLoading";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -12,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zSchema } from "@/lib/zodSchema";
 import Logo from "@/public/assets/logo.png";
-import { WEBSITE_REGISTER } from "@/routes/website";
+import { WEBSITE_LOGIN } from "@/routes/website";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,18 +22,26 @@ import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import z from "zod";
 
-function LoginPage() {
+function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [isTypePassword, setIsTypePassword] = useState(true);
  const formSchema = zSchema.pick({
+    name:true,
   email: true,
   password: true,
-});
+}).extend({
+    confirmPassword: z.string()
+}).refine((data)=> data.password=== data.confirmPassword, {
+    message: "Password and Confirm password must be same.",
+    path: ['confirmPassword']
+})
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
+        name:"",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
@@ -52,12 +61,32 @@ function LoginPage() {
           />
         </div>
         <div className="text-center">
-          <h1 className="text-3xl font-semibold">Login Into Account</h1>
-          <p>Login into your account by filling out the form below</p>
+          <h1 className="text-3xl font-semibold">Create Account</h1>
+          <p>Create new account by filling out the form below</p>
         </div>
         <div className="mt-5">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)}>
+              <div className="mb-5">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Abdur Rahman"
+                          {...field}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <div className="mb-5">
                 <FormField
                   control={form.control}
@@ -85,6 +114,29 @@ function LoginPage() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <div className="relative flex items-center">
+                          <Input
+                            type="password"
+                            placeholder="********"
+                            {...field}
+                            className="pr-10" // add padding so text doesn’t overlap button
+                          />
+                         
+                        </div>
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                 
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem className="mt-5">
+                      <FormLabel>Confirm Password</FormLabel>
                       <FormControl>
                         <div className="relative flex items-center">
                           <Input
@@ -117,12 +169,10 @@ function LoginPage() {
                 </div>
                 <div className="text-center mt-1.5">
                   <div className="flex justify-center items-center gap-1">
-                    <p>Don't have account?</p>
-                    <Link href={WEBSITE_REGISTER} className="text-primary underline">Create account</Link>
+                    <p>Already have account?</p>
+                    <Link href={WEBSITE_LOGIN} className="text-primary underline">Login</Link>
                   </div>
-                  <div className="mt-3">
-                    <Link href="" className="text-primary underline ">Forgot password?</Link>
-                  </div>
+                  
                 </div>
               </div>
             </form>
@@ -133,4 +183,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default RegisterPage
