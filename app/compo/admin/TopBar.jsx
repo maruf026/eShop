@@ -3,7 +3,7 @@
 import UserDropDown from './UserDropDown'
 import { Button } from '@/components/ui/button'
 import { RiMenu4Fill } from "react-icons/ri";
-import ThemeSwitch from './themeSwitch';
+import ThemeSwitch from './ThemeSwitch';
 import { useSidebar } from '@/components/ui/sidebar';
 
 function TopBar() {
