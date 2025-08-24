@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import z from "zod";
+import axios from 'axios';
 
 function RegisterPage() {
   const [loading, setLoading] = useState(false);
@@ -46,8 +47,20 @@ function RegisterPage() {
   });
 
   async function handleSubmit(values) {
-    console.log(values);
+    try{
+      setLoading(true)
+      const {data: registerResponse} = await axios.post('/api/auth/register', values)
+      if(!registerResponse.success){
+        throw new Error(registerResponse.message)
+      }
+      form.reset()
+      alert(registerResponse.message)
+    } catch(err){
+    alert(err.message)
+  } finally{
+    setLoading(false)
   }
+  } 
   return (
     <Card className="w-[450px]">
       <CardContent>
@@ -163,7 +176,7 @@ function RegisterPage() {
                   <ButtonLoading
                     loading={loading}
                     type="submit"
-                    text="Login"
+                    text="Create Account"
                     className="w-full cursor-pointer"
                   />
                 </div>
