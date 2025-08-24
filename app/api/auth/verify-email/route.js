@@ -12,8 +12,8 @@ export async function POST(request) {
         if(!token){
             return response(false, 400, "Missing token.")
         }
-        const sectet = new TextEncoder().encode(process.sectet.env.SECRET_KEY)
-        const decoded = await jwtVerify(token, sectet)
+        const secret = new TextEncoder().encode(process.secret.env.SECRET_KEY)
+        const decoded = await jwtVerify(token, secret)
         const userId = decoded.payload.userId
 
         if(!isValidObjectId(userId)){
