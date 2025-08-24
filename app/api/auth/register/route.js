@@ -1,3 +1,4 @@
+
 import { emailVerificationLink } from "@/email/emailVerificationLink";
 import { connectDB } from "@/lib/databaseConnection";
 import { catchError, response } from "@/lib/helperFunction";
@@ -46,12 +47,12 @@ if (existingUser) {
       .setProtectedHeader({ alg: "HS256" })
       .sign(secret);
 
-    const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email/${token}`;
+    const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-email/${token}`;
     console.log("Verification URL:", verificationUrl);
 
     // send mail
     const mailResult = await sendMail(
-      "Email verification request from Abdur Rahman",
+      "Email verification request from eShop",
       email,
       emailVerificationLink(verificationUrl)
     );
@@ -80,7 +81,7 @@ if (existingUser) {
 
     // 4️⃣ Generate verification token
     const secret = new TextEncoder().encode(process.env.SECRET_KEY);
-    const token = await new SignJWT({ userId: newUser._id })
+    const token = await new SignJWT({ userId: newUser._id.toString() })
       .setIssuedAt()
       .setExpirationTime("1h")
       .setProtectedHeader({ alg: "HS256" })

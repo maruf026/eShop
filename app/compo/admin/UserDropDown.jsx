@@ -11,6 +11,7 @@ import favicon from '@/public/assets/favicon.png'
 import { IoShirtOutline } from "react-icons/io5";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import Link from "next/link";
+import LogoutButton from "./LogoutButton";
 
 function UserDropDown() {
   return (
@@ -36,7 +37,7 @@ function UserDropDown() {
         <MdOutlineShoppingBag/>
         Orders</Link>
     </DropdownMenuItem>
-    
+    <LogoutButton/>
   </DropdownMenuContent>
 </DropdownMenu>
   )
