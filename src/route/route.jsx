@@ -14,6 +14,7 @@ import AddProduct from "../pages/admin/AddProduct";
 import AllProducts from "../pages/admin/AllProducts";
 import AddCategory from "../pages/admin/AddCategory";
 import Categories from "../pages/admin/Categories";
+import NotFound from "../components/NotFound";
 
 
 export const router = createBrowserRouter([
@@ -60,6 +61,7 @@ export const router = createBrowserRouter([
   {
     path:'/admin',
     element:<AdminLayout/>,
+    
     children:[
       {
         index: true,
@@ -81,6 +83,7 @@ export const router = createBrowserRouter([
         path:'/admin/categories',
         element:<Categories/>
       },
+      
     ]
   }
 ]);

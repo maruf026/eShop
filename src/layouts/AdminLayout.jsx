@@ -15,7 +15,7 @@ import {
   FiUsers,
   FiX,
 } from "react-icons/fi";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, ScrollRestoration } from "react-router-dom";
 import favicon from "../assets/favicon.png";
 
 const AdminLayout = () => {
@@ -258,6 +258,7 @@ const AdminLayout = () => {
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto bg-gray-50 p-4 lg:p-8">
+          <ScrollRestoration />
           <Outlet />
         </main>
       </div>
