@@ -1,8 +1,6 @@
 import { useState } from "react";
 import {
-  FiBarChart2,
   FiBell,
-  FiBox,
   FiChevronDown,
   FiChevronRight,
   FiMail,
@@ -12,7 +10,6 @@ import {
   FiSettings,
   FiShoppingCart,
   FiTag,
-  FiUsers,
   FiX,
 } from "react-icons/fi";
 import { Link, NavLink, Outlet, ScrollRestoration } from "react-router-dom";
@@ -45,7 +42,7 @@ const AdminLayout = () => {
         { name: "All Products", path: "/admin/all-products" },
       ],
     },
-    
+
     {
       name: "Categories",
       path: "/categories",
@@ -56,9 +53,12 @@ const AdminLayout = () => {
         { name: "Manage Category", path: "/admin/categories" },
       ],
     },
-    { name: "Orders", path: "/admin/orders", icon: <FiShoppingCart />, badge: "2" },
-    { name: "Customers", path: "/admin/customers", icon: <FiUsers /> },
-    
+    {
+      name: "Orders",
+      path: "/admin/orders",
+      icon: <FiShoppingCart />,
+      badge: "2",
+    },
     { name: "Coupons", path: "/admin/coupons", icon: <FiTag /> },
     { name: "Inbox", path: "/admin/inbox", icon: <FiMail /> },
     // { name: "Inventory", path: "/admin/inventory", icon: <FiBox /> },
@@ -70,7 +70,11 @@ const AdminLayout = () => {
       path: "/admin/personal-settings",
       icon: <FiSettings />,
     },
-    { name: "Global Settings", path: "/admin/global-settings", icon: <FiSettings /> },
+    {
+      name: "Global Settings",
+      path: "/admin/global-settings",
+      icon: <FiSettings />,
+    },
   ];
 
   return (
@@ -82,19 +86,19 @@ const AdminLayout = () => {
         } flex flex-col`}
       >
         {/* Logo */}
-        <Link to='/admin'>
-        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-700">
-          <div className="flex items-center space-x-2">
-            <img className="w-15 h-15" src={favicon} alt="" />
-            <span className="text-xl font-bold text-white">eShop</span>
+        <Link to="/admin">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-gray-700">
+            <div className="flex items-center space-x-2">
+              <img className="w-15 h-15" src={favicon} alt="" />
+              <span className="text-xl font-bold text-white">eShop</span>
+            </div>
+            <button
+              onClick={closeSidebar}
+              className="lg:hidden text-gray-400 hover:text-white"
+            >
+              <FiX size={24} />
+            </button>
           </div>
-          <button
-            onClick={closeSidebar}
-            className="lg:hidden text-gray-400 hover:text-white"
-          >
-            <FiX size={24} />
-          </button>
-        </div>
         </Link>
 
         {/* Navigation */}
@@ -268,4 +272,3 @@ const AdminLayout = () => {
 };
 
 export default AdminLayout;
-

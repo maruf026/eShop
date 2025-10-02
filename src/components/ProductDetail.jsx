@@ -17,8 +17,10 @@ import {
   FiStar,
   FiTruck,
 } from "react-icons/fi";
+import { useCart } from "../contexts/CartContext";
 
 const ProductDetail = () => {
+  const { handleAddToCart } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   // const [selectedColor, setSelectedColor] = useState("Space Black");
@@ -320,7 +322,7 @@ const ProductDetail = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-3 pt-4">
-              <button className="flex-1 bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition flex items-center justify-center gap-2">
+              <button onClick={() => handleAddToCart(product)} className="flex-1 bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition flex items-center justify-center gap-2">
                 <FiShoppingCart size={20} />
                 Add to Cart
               </button>
@@ -521,7 +523,8 @@ const ProductDetail = () => {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {relatedProducts.map((item) => (
-              <Link to={`/products/${item.id}`}
+              <Link
+                to={`/products/${item.id}`}
                 key={item.id}
                 href={`/product/${item.id}`}
                 className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition"

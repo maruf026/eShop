@@ -122,7 +122,7 @@ const Checkout = () => {
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
                       errors.name ? 'border-red-500' : 'border-gray-300'
                     }`}
-                    placeholder="John Doe"
+                    placeholder="Abdur Rahman"
                   />
                   {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                 </div>
@@ -139,7 +139,7 @@ const Checkout = () => {
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
                       errors.email ? 'border-red-500' : 'border-gray-300'
                     }`}
-                    placeholder="john@example.com"
+                    placeholder="email@example.com"
                   />
                   {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
@@ -156,7 +156,7 @@ const Checkout = () => {
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
                       errors.phone ? 'border-red-500' : 'border-gray-300'
                     }`}
-                    placeholder="(555) 123-4567"
+                    placeholder="+880 1234-567890"
                   />
                   {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
                 </div>
@@ -191,7 +191,7 @@ const Checkout = () => {
                       className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
                         errors.city ? 'border-red-500' : 'border-gray-300'
                       }`}
-                      placeholder="New York"
+                      placeholder="Narsingdi"
                     />
                     {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
                   </div>

@@ -11,32 +11,68 @@ import {
   FiStar,
   FiX,
 } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import products from "../data'/products";
+import { Link, useNavigate, useParams } from "react-router-dom";
+// import products from "../data/products";
 import { useCart } from "../contexts/CartContext";
+import products from "../data'/products";
 
 const Products = () => {
-
-
+  const { category } = useParams(); // Get category from URL
+  const navigate = useNavigate();
 
   // State management
   const [allProducts, setAllProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [priceRange, setPriceRange] = useState([0, 2500]);
   const [sortBy, setSortBy] = useState("featured");
-  const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
+  const [viewMode, setViewMode] = useState("grid");
   const [showMobileFilter, setShowMobileFilter] = useState(false);
 
   // Get unique categories
   const categories = [
     "All",
-    ...new Set(allProducts.map((product) => product.category)),
+    ...new Set(products.map((product) => product.category)),
   ];
+
+  // Sync URL parameter with selected category on mount and when URL changes
+  useEffect(() => {
+    if (category) {
+      // Decode and format the category from URL
+      const decodedCategory = decodeURIComponent(category)
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+
+      // Check if the category exists in our categories list
+      if (categories.includes(decodedCategory)) {
+        setSelectedCategory(decodedCategory);
+      } else {
+        setSelectedCategory("All");
+      }
+    } else {
+      setSelectedCategory("All");
+    }
+  }, [category]);
+
+  // Handle category change and update URL
+  const handleCategoryChange = (newCategory) => {
+    setSelectedCategory(newCategory);
+
+    // Update URL when category changes
+    if (newCategory === "All") {
+      navigate("/products");
+    } else {
+      // Convert category to URL-friendly format (lowercase with hyphens)
+      const urlCategory = newCategory.toLowerCase().replace(/\s+/g, "-");
+      navigate(`/products/category/${urlCategory}`);
+    }
+  };
 
   // Filter and sort products
   useEffect(() => {
-    let filtered = allProducts;
+    let filtered = [...products];
 
     // Filter by search term
     if (searchTerm) {
@@ -80,7 +116,7 @@ const Products = () => {
         break;
     }
 
-    setAllProducts(filtered);
+    setFilteredProducts(filtered);
   }, [searchTerm, selectedCategory, priceRange, sortBy]);
 
   // Reset filters
@@ -89,6 +125,7 @@ const Products = () => {
     setSelectedCategory("All");
     setPriceRange([0, 2500]);
     setSortBy("featured");
+    navigate("/products");
   };
 
   return (
@@ -97,10 +134,12 @@ const Products = () => {
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-            All Products
+            {selectedCategory === "All" ? "All Products" : selectedCategory}
           </h1>
           <p className="text-gray-600">
-            Discover our wide range of electronics
+            {selectedCategory === "All"
+              ? "Discover our wide range of electronics"
+              : `Browse our ${selectedCategory} collection`}
           </p>
         </div>
 
@@ -141,20 +180,20 @@ const Products = () => {
                   Category
                 </label>
                 <div className="space-y-2">
-                  {categories.map((category) => (
+                  {categories.map((cat) => (
                     <label
-                      key={category}
+                      key={cat}
                       className="flex items-center cursor-pointer group"
                     >
                       <input
                         type="radio"
                         name="category"
-                        checked={selectedCategory === category}
-                        onChange={() => setSelectedCategory(category)}
+                        checked={selectedCategory === cat}
+                        onChange={() => handleCategoryChange(cat)}
                         className="w-4 h-4 text-orange-600 focus:ring-orange-500"
                       />
                       <span className="ml-3 text-gray-700 group-hover:text-orange-600">
-                        {category}
+                        {cat}
                       </span>
                     </label>
                   ))}
@@ -196,7 +235,7 @@ const Products = () => {
                     {selectedCategory !== "All" && (
                       <div className="flex items-center justify-between text-sm bg-orange-50 px-3 py-1 rounded">
                         <span>{selectedCategory}</span>
-                        <button onClick={() => setSelectedCategory("All")}>
+                        <button onClick={() => handleCategoryChange("All")}>
                           <FiX className="text-orange-600" />
                         </button>
                       </div>
@@ -232,7 +271,7 @@ const Products = () => {
 
                   <p className="text-gray-600">
                     <span className="font-semibold text-gray-800">
-                      {products.length}
+                      {filteredProducts.length}
                     </span>{" "}
                     Products Found
                   </p>
@@ -280,7 +319,7 @@ const Products = () => {
             </div>
 
             {/* Products Grid/List */}
-            {products.length > 0 ? (
+            {filteredProducts.length > 0 ? (
               <div
                 className={
                   viewMode === "grid"
@@ -288,7 +327,7 @@ const Products = () => {
                     : "space-y-4"
                 }
               >
-                {allProducts.map((product) => (
+                {filteredProducts.map((product) => (
                   <ProductCard
                     key={product.id}
                     product={product}
@@ -351,19 +390,19 @@ const Products = () => {
                   Category
                 </label>
                 <div className="space-y-2">
-                  {categories.map((category) => (
+                  {categories.map((cat) => (
                     <label
-                      key={category}
+                      key={cat}
                       className="flex items-center cursor-pointer"
                     >
                       <input
                         type="radio"
                         name="mobile-category"
-                        checked={selectedCategory === category}
-                        onChange={() => setSelectedCategory(category)}
+                        checked={selectedCategory === cat}
+                        onChange={() => handleCategoryChange(cat)}
                         className="w-4 h-4 text-orange-600 focus:ring-orange-500"
                       />
-                      <span className="ml-3 text-gray-700">{category}</span>
+                      <span className="ml-3 text-gray-700">{cat}</span>
                     </label>
                   ))}
                 </div>
@@ -417,7 +456,7 @@ const Products = () => {
 
 // Product Card Component
 const ProductCard = ({ product, viewMode }) => {
-  const {handleAddToCart} = useCart()
+  const { handleAddToCart } = useCart();
   if (viewMode === "list") {
     return (
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition group">
@@ -476,7 +515,7 @@ const ProductCard = ({ product, viewMode }) => {
                 )}
               </div>
               <button
-              onClick={()=> handleAddToCart(product)}
+                onClick={() => handleAddToCart(product)}
                 disabled={!product.inStock}
                 className={`px-6 py-2 rounded-lg font-semibold transition flex items-center gap-2 ${
                   product.inStock
@@ -495,42 +534,41 @@ const ProductCard = ({ product, viewMode }) => {
   }
 
   return (
-   
     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden group hover:shadow-xl transition duration-300">
       <Link to={`/products/${product.id}`}>
-      <div className="relative overflow-hidden bg-gray-50">
-        <img
-          src={product.images[0]}
-          alt={product.name}
-          className="w-full h-64 object-cover group-hover:scale-110 transition duration-300"
-        />
-        {!product.inStock && (
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <span className="bg-red-500 text-white px-3 py-1 rounded text-sm font-semibold">
-              Out of Stock
-            </span>
+        <div className="relative overflow-hidden bg-gray-50">
+          <img
+            src={product.images[0]}
+            alt={product.name}
+            className="w-full h-64 object-cover group-hover:scale-110 transition duration-300"
+          />
+          {!product.inStock && (
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <span className="bg-red-500 text-white px-3 py-1 rounded text-sm font-semibold">
+                Out of Stock
+              </span>
+            </div>
+          )}
+          <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition">
+            <button className="bg-white p-2 rounded-full shadow-lg hover:bg-orange-600 hover:text-white transition">
+              <FiHeart />
+            </button>
+            <button className="bg-white p-2 rounded-full shadow-lg hover:bg-orange-600 hover:text-white transition">
+              <FiEye />
+            </button>
           </div>
-        )}
-        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition">
-          <button className="bg-white p-2 rounded-full shadow-lg hover:bg-orange-600 hover:text-white transition">
-            <FiHeart />
-          </button>
-          <button className="bg-white p-2 rounded-full shadow-lg hover:bg-orange-600 hover:text-white transition">
-            <FiEye />
-          </button>
+          {product.originalPrice > product.price && (
+            <span className="absolute bottom-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+              -
+              {Math.round(
+                ((product.originalPrice - product.price) /
+                  product.originalPrice) *
+                  100
+              )}
+              % OFF
+            </span>
+          )}
         </div>
-        {product.originalPrice > product.price && (
-          <span className="absolute bottom-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-            -
-            {Math.round(
-              ((product.originalPrice - product.price) /
-                product.originalPrice) *
-                100
-            )}
-            % OFF
-          </span>
-        )}
-      </div>
       </Link>
       <div className="p-4">
         <p className="text-xs text-gray-500 mb-1">{product.brand}</p>
@@ -563,23 +601,21 @@ const ProductCard = ({ product, viewMode }) => {
             </span>
           )}
         </div>
-        
-          <button
-            onClick={()=> handleAddToCart(product)}
-            disabled={!product.inStock}
-            className={`w-full py-2.5 rounded-lg font-semibold transition flex items-center justify-center gap-2 ${
-              product.inStock
-                ? "bg-orange-600 text-white hover:bg-orange-700"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
-          >
-            <FiShoppingCart />
-            {product.inStock ? "Add to Cart" : "Out of Stock"}
-          </button>
-        
+
+        <button
+          onClick={() => handleAddToCart(product)}
+          disabled={!product.inStock}
+          className={`w-full py-2.5 rounded-lg font-semibold transition flex items-center justify-center gap-2 ${
+            product.inStock
+              ? "bg-orange-600 text-white hover:bg-orange-700"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          <FiShoppingCart />
+          {product.inStock ? "Add to Cart" : "Out of Stock"}
+        </button>
       </div>
     </div>
-   
   );
 };
 

@@ -1,94 +1,108 @@
 // components/Navbar.jsx
-import React, { useState } from 'react';
-import { FiShoppingCart, FiUser, FiMenu, FiX, FiChevronDown, FiHeart, FiPhone } from 'react-icons/fi';
-import logo from '../assets/logo.png';
-import { useCart } from '../contexts/CartContext';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import {
+  FiChevronDown,
+  FiHeart,
+  FiMenu,
+  FiPhone,
+  FiShoppingCart,
+  FiUser,
+  FiX,
+} from "react-icons/fi";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
+import { useCart } from "../contexts/CartContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openMobileCategory, setOpenMobileCategory] = useState(null);
 
   const categories = [
-    { 
-      name: 'Smartphone', 
-      href: '/smartphone',
+    {
+      name: "Smartphone",
+      href: "/products/category/smartphone",
       subcategories: [
-        { name: 'iPhone', href: '/smartphone/iphone' },
-        { name: 'Samsung', href: '/smartphone/samsung' },
-        { name: 'Xiaomi', href: '/smartphone/xiaomi' },
-        { name: 'OnePlus', href: '/smartphone/oneplus' }
-      ] 
+        { name: "iPhone", href: "/smartphone/iphone" },
+        { name: "Samsung", href: "/smartphone/samsung" },
+        { name: "Xiaomi", href: "/smartphone/xiaomi" },
+        { name: "OnePlus", href: "/smartphone/oneplus" },
+      ],
     },
-    { 
-      name: 'Laptop', 
-      href: '/laptop',
+    {
+      name: "Laptop",
+      href: "/products/category/laptop",
       subcategories: [
-        { name: 'MacBook', href: '/laptop/macbook' },
-        { name: 'Dell', href: '/laptop/dell' },
-        { name: 'HP', href: '/laptop/hp' },
-        { name: 'Lenovo', href: '/laptop/lenovo' }
-      ] 
+        { name: "MacBook", href: "/laptop/macbook" },
+        { name: "Dell", href: "/laptop/dell" },
+        { name: "HP", href: "/laptop/hp" },
+        { name: "Lenovo", href: "/laptop/lenovo" },
+      ],
     },
-    { 
-      name: 'Smartwatch', 
-      href: '/smartwatch',
+    {
+      name: "Smartwatch",
+      href: "/products/category/smartwatch",
       subcategories: [
-        { name: 'Apple Watch', href: '/smartwatch/apple' },
-        { name: 'Samsung Watch', href: '/smartwatch/samsung' },
-        { name: 'Fitbit', href: '/smartwatch/fitbit' }
-      ] 
+        { name: "Apple Watch", href: "/smartwatch/apple" },
+        { name: "Samsung Watch", href: "/smartwatch/samsung" },
+        { name: "Fitbit", href: "/smartwatch/fitbit" },
+      ],
     },
-    { 
-      name: 'Accessories', 
-      href: '/accessories',
+    {
+      name: "Accessories",
+      href: "/products/category/accessories",
       subcategories: [
-        { name: 'Cases', href: '/accessories/cases' },
-        { name: 'Chargers', href: '/accessories/chargers' },
-        { name: 'Headphones', href: '/accessories/headphones' },
-        { name: 'Cables', href: '/accessories/cables' }
-      ] 
+        { name: "Cases", href: "/accessories/cases" },
+        { name: "Chargers", href: "/accessories/chargers" },
+        { name: "Headphones", href: "/accessories/headphones" },
+        { name: "Cables", href: "/accessories/cables" },
+      ],
     },
-    { 
-      name: 'Tablets', 
-      href: '/tablets',
+    {
+      name: "Tablets",
+      href: "/products/category/tablets",
       subcategories: [
-        { name: 'iPad', href: '/tablets/ipad' },
-        { name: 'Samsung Tab', href: '/tablets/samsung' },
-        { name: 'Android Tablets', href: '/tablets/android' }
-      ] 
+        { name: "iPad", href: "/tablets/ipad" },
+        { name: "Samsung Tab", href: "/tablets/samsung" },
+        { name: "Android Tablets", href: "/tablets/android" },
+      ],
     },
-    { 
-      name: 'Audio', 
-      href: '/audio',
+    {
+      name: "Audio",
+      href: "/products/category/audio",
       subcategories: [
-        { name: 'Earbuds', href: '/audio/earbuds' },
-        { name: 'Headphones', href: '/audio/headphones' },
-        { name: 'Speakers', href: '/audio/speakers' }
-      ] 
-    }
+        { name: "Earbuds", href: "/audio/earbuds" },
+        { name: "Headphones", href: "/audio/headphones" },
+        { name: "Speakers", href: "/audio/speakers" },
+      ],
+    },
   ];
 
   const toggleMobileCategory = (index) => {
     setOpenMobileCategory(openMobileCategory === index ? null : index);
   };
 
-  const {cart} =useCart()
+  const { cart } = useCart();
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       {/* Top Bar with Announcement & Quick Links */}
-      <div className="bg-gradient-to-r from-orange-600 to-orange-500 text-white">
+      <div className="bg-gradient-to-r from-orange-600 to-orange-600 text-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row items-center justify-between py-2 text-xs md:text-sm">
             <div className="flex items-center gap-2">
               <FiPhone className="text-sm" />
-              <span>+1 (555) 123-4567</span>
+              <span>+880 1234-567890</span>
             </div>
-            <p className="font-medium">🎉 Free shipping on orders over $50!</p>
+            <p className="font-medium">
+              🎉 বিশেষ অফার! নতুন গ্রাহকদের জন্য ১০% ছাড়{" "}
+            </p>
             <div className="hidden md:flex items-center gap-4">
-              <a href="/track-order" className="hover:underline">Track Order</a>
-              <a href="/help" className="hover:underline">Help</a>
+              <a href="/track-order" className="hover:underline">
+                Track Order
+              </a>
+              <a href="/help" className="hover:underline">
+                Help
+              </a>
             </div>
           </div>
         </div>
@@ -100,26 +114,38 @@ const Navbar = () => {
           <div className="flex items-center justify-between py-4">
             {/* Logo */}
             <a href="/" className="flex items-center">
-              <img 
-                className="h-10 md:h-12 w-auto object-contain" 
-                src={logo} 
-                alt="eShop Logo" 
+              <img
+                className="h-10 md:h-12 w-auto object-contain"
+                src={logo}
+                alt="eShop Logo"
               />
             </a>
 
             {/* Desktop Navigation Links */}
             <div className="hidden lg:flex items-center gap-8">
-              <a href="/" className="text-gray-700 hover:text-orange-600 font-medium transition">
+              <a
+                href="/"
+                className="text-gray-700 hover:text-orange-600 font-medium transition"
+              >
                 Home
               </a>
-              <a href="/products" className="text-gray-700 hover:text-orange-600 font-medium transition">
+              <a
+                href="/products"
+                className="text-gray-700 hover:text-orange-600 font-medium transition"
+              >
                 All Products
               </a>
-             
-              <a href="/about" className="text-gray-700 hover:text-orange-600 font-medium transition">
+
+              <a
+                href="/about"
+                className="text-gray-700 hover:text-orange-600 font-medium transition"
+              >
                 About Us
               </a>
-              <a href="/contact" className="text-gray-700 hover:text-orange-600 font-medium transition">
+              <a
+                href="/contact"
+                className="text-gray-700 hover:text-orange-600 font-medium transition"
+              >
                 Contact
               </a>
             </div>
@@ -127,8 +153,8 @@ const Navbar = () => {
             {/* Action Icons */}
             <div className="flex items-center gap-3 md:gap-5">
               {/* Wishlist - Hidden on small mobile */}
-              <a 
-                href="/wishlist" 
+              <a
+                href="/wishlist"
                 className="hidden sm:flex flex-col items-center group"
               >
                 <div className="relative">
@@ -137,24 +163,33 @@ const Navbar = () => {
                     2
                   </span>
                 </div>
-                <span className="hidden md:block text-xs text-gray-600 mt-1">Wishlist</span>
+                <span className="hidden md:block text-xs text-gray-600 mt-1">
+                  Wishlist
+                </span>
               </a>
 
               {/* Account */}
               <Link to="/admin" className="flex flex-col items-center group">
                 <FiUser className="text-xl md:text-2xl text-gray-700 group-hover:text-orange-600 transition" />
-                <span className="hidden md:block text-xs text-gray-600 mt-1">Account</span>
+                <span className="hidden md:block text-xs text-gray-600 mt-1">
+                  Account
+                </span>
               </Link>
 
               {/* Cart */}
-              <Link to="/cart" className="flex flex-col items-center group relative">
+              <Link
+                to="/cart"
+                className="flex flex-col items-center group relative"
+              >
                 <div className="relative">
                   <FiShoppingCart className="text-xl md:text-2xl text-gray-700 group-hover:text-orange-600 transition" />
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
                     {cart.length}
                   </span>
                 </div>
-                <span className="hidden md:block text-xs text-gray-600 mt-1">Cart</span>
+                <span className="hidden md:block text-xs text-gray-600 mt-1">
+                  Cart
+                </span>
               </Link>
 
               {/* Mobile Menu Toggle */}
@@ -171,24 +206,26 @@ const Navbar = () => {
       </div>
 
       {/* Categories Bar - Desktop Only */}
-      <div className="hidden lg:block bg-gray-50">
+      <div className="hidden lg:block bg-[#0E9E8D]">
         <div className="container mx-auto px-4">
           <ul className="flex items-center justify-center gap-6 xl:gap-8 py-3">
             {categories.map((category, index) => (
               <li key={index} className="relative group">
-                <a
-                  href={category.href}
-                  className="flex items-center gap-1.5 text-gray-700 hover:text-orange-600 font-medium transition-colors py-2"
+                <Link
+                  to={category.href}
+                  className="flex items-center gap-1.5 text-white hover:text-orange-600 font-medium transition-colors py-2"
                 >
                   {category.name}
                   <FiChevronDown className="text-sm group-hover:rotate-180 transition-transform duration-300" />
-                </a>
+                </Link>
 
                 {/* Dropdown Menu */}
                 <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                   <div className="bg-white shadow-xl rounded-lg py-2 min-w-[200px] border border-gray-100">
                     <div className="px-3 py-2 border-b border-gray-100">
-                      <p className="text-xs font-semibold text-gray-500 uppercase">Browse {category.name}</p>
+                      <p className="text-xs font-semibold text-gray-500 uppercase">
+                        Browse {category.name}
+                      </p>
                     </div>
                     {category.subcategories.map((sub, subIndex) => (
                       <a
@@ -218,7 +255,7 @@ const Navbar = () => {
       {/* Mobile Sidebar Menu */}
       <div
         className={`lg:hidden fixed inset-y-0 left-0 w-80 max-w-[85vw] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
-          isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Mobile Menu Header */}
@@ -262,7 +299,9 @@ const Navbar = () => {
 
           {/* Main Navigation */}
           <div className="p-4">
-            <p className="text-xs font-semibold text-gray-500 uppercase mb-3 px-2">Main Menu</p>
+            <p className="text-xs font-semibold text-gray-500 uppercase mb-3 px-2">
+              Main Menu
+            </p>
             <div className="space-y-1 mb-4">
               <a
                 href="/"
@@ -291,7 +330,9 @@ const Navbar = () => {
           {/* Categories */}
           <div className="border-t">
             <div className="p-4">
-              <p className="text-xs font-semibold text-gray-500 uppercase mb-3 px-2">Categories</p>
+              <p className="text-xs font-semibold text-gray-500 uppercase mb-3 px-2">
+                Categories
+              </p>
               <ul className="space-y-1">
                 {categories.map((category, index) => (
                   <li key={index}>
@@ -302,15 +343,17 @@ const Navbar = () => {
                       <span>{category.name}</span>
                       <FiChevronDown
                         className={`transition-transform duration-300 ${
-                          openMobileCategory === index ? 'rotate-180' : ''
+                          openMobileCategory === index ? "rotate-180" : ""
                         }`}
                       />
                     </button>
-                    
+
                     {/* Subcategories */}
                     <div
                       className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                        openMobileCategory === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                        openMobileCategory === index
+                          ? "max-h-96 opacity-100"
+                          : "max-h-0 opacity-0"
                       }`}
                     >
                       <ul className="bg-gray-50 rounded-lg my-1 py-2">
@@ -390,5 +433,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
