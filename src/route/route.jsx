@@ -15,6 +15,9 @@ import AllProducts from "../pages/admin/AllProducts";
 import AddCategory from "../pages/admin/AddCategory";
 import Categories from "../pages/admin/Categories";
 import NotFound from "../components/NotFound";
+import Orders from "../pages/admin/Orders";
+import Inbox from "../pages/admin/Inbox";
+import Coupons from "../pages/admin/Coupons";
 
 
 export const router = createBrowserRouter([
@@ -82,6 +85,18 @@ export const router = createBrowserRouter([
       {
         path:'/admin/categories',
         element:<Categories/>
+      },
+       {
+        path:'/admin/orders',
+        element:<Orders/>
+      },
+       {
+        path:'/admin/inbox',
+        element:<Inbox/>
+      },
+      {
+        path:'/admin/coupons',
+        element:<Coupons/>
       },
       
     ]

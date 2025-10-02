@@ -45,7 +45,7 @@ const AdminLayout = () => {
         { name: "All Products", path: "/admin/all-products" },
       ],
     },
-    { name: "Orders", path: "/orders", icon: <FiShoppingCart />, badge: "16" },
+    
     {
       name: "Categories",
       path: "/categories",
@@ -56,20 +56,21 @@ const AdminLayout = () => {
         { name: "Manage Category", path: "/admin/categories" },
       ],
     },
-    { name: "Customers", path: "/customers", icon: <FiUsers /> },
-    { name: "Reports", path: "/reports", icon: <FiBarChart2 /> },
-    { name: "Coupons", path: "/coupons", icon: <FiTag /> },
-    { name: "Inbox", path: "/inbox", icon: <FiMail /> },
-    { name: "Inventory", path: "/inventory", icon: <FiBox /> },
+    { name: "Orders", path: "/admin/orders", icon: <FiShoppingCart />, badge: "2" },
+    { name: "Customers", path: "/admin/customers", icon: <FiUsers /> },
+    
+    { name: "Coupons", path: "/admin/coupons", icon: <FiTag /> },
+    { name: "Inbox", path: "/admin/inbox", icon: <FiMail /> },
+    // { name: "Inventory", path: "/admin/inventory", icon: <FiBox /> },
   ];
 
   const settingsItems = [
     {
       name: "Personal Settings",
-      path: "/settings/personal",
+      path: "/admin/personal-settings",
       icon: <FiSettings />,
     },
-    { name: "Global Settings", path: "/settings/global", icon: <FiSettings /> },
+    { name: "Global Settings", path: "/admin/global-settings", icon: <FiSettings /> },
   ];
 
   return (
